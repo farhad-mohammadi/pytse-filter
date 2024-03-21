@@ -1,0 +1,1 @@
+plp < 1 and buy_per_capita > 25 and power_of_demand > 2 and cor_sell_ratio > 20
