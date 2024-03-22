@@ -1,90 +1,113 @@
-pytse-filter: Tehran Stock Exchange Data Processing Library  
-Welcome to the pytse-filter library, a Python package designed for processing and analyzing Tehran Stock Exchange (TSE) symbol data through user-defined text filters. This library simplifies the task of filtering TSE data based on various conditions, making it an essential tool for traders and analysts.  
+# pytse-filter: Tehran Stock Exchange Data Processing Library
 
-Prerequisites  
-Before you begin, ensure you have the following:  
+Welcome to the **pytse-filter** library, a Python package designed for processing and analyzing Tehran Stock Exchange (TSE) symbol data through user-defined text filters. This library simplifies the task of filtering TSE data based on various conditions, making it an essential tool for traders and analysts.
 
-•  Python 3.x installed on your system.  
+## Prerequisites
 
-•  Required packages: pandas, pandas_ta, requests, and tqdm installed via pip.  
+Before you begin, ensure you have the following:
 
-Installation  
-Install pytse-filter easily using pip:  
+- **Python 3.x** installed on your system.
+- Required packages: **pandas**, **pandas_ta**, **requests**, and **tqdm** installed via `pip`.
 
-pip install pytse_filter  
+## Installation
 
-Or, for the latest version from the repository:  
+Install **pytse-filter** easily using pip:
 
-pip install git+https://github.com/farhad-mohammadi/pytse-filter.git  
+```bash
+pip install pytse_filter
+```
 
-Alternatively, clone and install from the source:  
+Or, for the latest version from the repository:
 
-git clone https://github.com/farhad-mohammadi/pytse-filter  
-cd pytse_filter  
-pip install .  
+```bash
+pip install git+https://github.com/farhad-mohammadi/pytse-filter.git
+```
 
-Dependencies will be automatically resolved and installed.  
+Alternatively, clone and install from the source:
 
-Usage  
-pytse-filter is divided into two main components: Realtime and History. These cater to users ranging from beginners to professionals, providing tools for both real-time data processing and historical data analysis.  
+```bash
+git clone https://github.com/farhad-mohammadi/pytse-filter
+cd pytse_filter
+pip install .
+```
 
-Realtime Filtering  
-For real-time data filtering, import the RealTime class and use it as follows:  
+Dependencies will be automatically resolved and installed.
 
-from pytse_filter import RealTime  
+## Usage
 
-# Define your conditions  
-conditions = 'pl < py and power_of_demand > 1'  
+**pytse-filter** is divided into two main components: **Realtime** and **History**. These cater to users ranging from beginners to professionals, providing tools for both real-time data processing and historical data analysis.
 
-# Filter data based on conditions  
-df = RealTime().filter_by_text_condition(conditions)  
-print(df)  
+### Realtime Filtering
 
-# Save results to Excel (optional)  
-df.to_excel('myfilter.xlsx')  
+For real-time data filtering, import the `RealTime` class and use it as follows:
 
-Advanced Realtime Monitoring  
-Advanced users can continuously monitor symbol status changes:  
+```python
+from pytse_filter import RealTime
 
-from pytse_filter import RealTime  
-from time import sleep  
-import sys  
+# Define your conditions
+conditions = 'pl < py and power_of_demand > 1'
 
-# Initialize market data  
-market = RealTime()  
+# Filter data based on conditions
+df = RealTime().filter_by_text_condition(conditions)
+print(df)
 
-# Fetch and monitor sell queue symbols  
-sell_queue_symbols = market.filter_by_text_condition('pl == tmin')  
-# ... rest of the advanced monitoring code ...  
+# Save results to Excel (optional)
+df.to_excel('myfilter.xlsx')
+```
 
-Historical Data Analysis  
-The History class allows for in-depth historical stock data analysis:  
+## Advanced Realtime Monitoring
 
-from pytse_filter import History  
+Advanced users can continuously monitor symbol status changes:
 
-# Download and update data with the latest market information  
-History().download_summary()  
+```python
+from pytse_filter import RealTime
+from time import sleep
+import sys
 
-# Apply filters based on technical indicators and patterns  
-conditions = 'rsi14 < 30 and macd > 0'  
-df = History().filter_by_text_condition(conditions)  
-print(df)  
+# Initialize market data
+market = RealTime()
 
-# Save filtered data (optional)  
-df.to_excel('filtered_symbols.xlsx')  
+# Fetch and monitor sell queue symbols
+sell_queue_symbols = market.filter_by_text_condition('pl == tmin')
+# ... rest of the advanced monitoring code ...
+```
 
-Comprehensive Analysis  
-Combine realtime and historical data for a complete analysis setup:  
+## Historical Data Analysis
 
-from pytse_filter import History, RealTime  
-# ... code to combine and analyze data ...  
+The **History** class allows for in-depth historical stock data analysis:
 
-Writing Conditions  
-Define criteria for filtering stock data using a simple text string format. Utilize variables from RealTimeVariables.xlsx and HistoryVariable.xlsx, and employ comparison and logical operators to create complex conditions.  
+```python
+from pytse_filter import History
 
-License  
-pytse-filter is MIT licensed. See the LICENSE file for more details.  
+# Download and update data with the latest market information
+History().download_summary()
 
-For the full user guide, examples, and advanced usage instructions, please refer to the user_guide.md included with this package, or visit the GitHub repository(https://github.com/farhad-mohammadi/pytse-filter).  
+# Apply filters based on technical indicators and patterns
+conditions = 'rsi14 < 30 and macd > 0'
+df = History().filter_by_text_condition(conditions)
+print(df)
 
-Happy trading!  
+# Save filtered data (optional)
+df.to_excel('filtered_symbols.xlsx')
+```
+
+## Comprehensive Analysis
+
+Combine realtime and historical data for a complete analysis setup:
+
+```python
+from pytse_filter import History, RealTime
+# ... code to combine and analyze data ...
+```
+
+## Writing Conditions
+
+Define criteria for filtering stock data using a simple text string format. Utilize variables from `RealTimeVariables.xlsx` and `HistoryVariable.xlsx`, and employ comparison and logical operators to create complex conditions.
+
+## License
+
+**pytse-filter** is MIT licensed. See the [LICENSE](https://github.com/farhad-mohammadi/pytse-filter/blob/main/LICENSE) file for more details.
+
+For the full user guide, examples, and advanced usage instructions, please refer to the `user_guide.md` included with this package, or visit the [GitHub repository](https://github.com/farhad-mohammadi/pytse-filter).
+
+Happy trading! 📈💹
