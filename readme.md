@@ -3,6 +3,7 @@ Welcome to the pytse-filter library, a Python package designed for processing an
 
 Prerequisites
 Before you begin, ensure you have the following:
+
 •  Python 3.x installed on your system.
 
 •  Required packages: pandas, pandas_ta, requests, and tqdm installed via pip.
@@ -84,6 +85,6 @@ Define criteria for filtering stock data using a simple text string format. Util
 License
 pytse-filter is MIT licensed. See the LICENSE file for more details.
 
-For the full user guide, examples, and advanced usage instructions, please refer to the user_guide.md included with this package.
+For the full user guide, examples, and advanced usage instructions, please refer to the user_guide.md included with this package, or visit the GitHub repository(https://github.com/farhad-mohammadi/pytse-filter).
 
 Happy trading!
