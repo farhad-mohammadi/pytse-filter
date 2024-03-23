@@ -133,7 +133,7 @@ class History:
         """
 
         if symbols == "all":
-            symbols = list(symbols_dict().keys())[:16]
+            symbols = list(symbols_dict().keys())
         dfs = []
         length = inds_setting.find_count(inds_setting.indicators)
         for symbol in tqdm(symbols):
