@@ -25,10 +25,10 @@ calculations = {
             }
         }
     ],
-    "power_of_demand": [
+    "power": [
         {
             "columns": [
-                "power_of_demand_avg10"
+                "power_avg10"
             ],
             "args": {
                 "method": "mean",
@@ -36,10 +36,10 @@ calculations = {
             }
         }
     ],
-    "indivisual_mony_flow": [
+    "mony_flow": [
         {
             "columns": [
-                "indivisual_mony_flow_total10"
+                "mony_flow_total10"
             ],
             "args": {
                 "method": "sum",

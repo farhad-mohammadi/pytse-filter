@@ -44,6 +44,9 @@ def get_supply_demand_data(datas):
     df5.columns=['row', 'zo5', 'zd5', 'pd5', 'po5', 'qd5', 'qo5']
     df = pd.concat([df1, df2, df3, df4, df5], axis=1)
     df.drop(columns= ['row'], inplace= True)
+    df = df.apply (pd.to_numeric, errors='coerce')
+    df['d1_value'] = df['pd1'] * df['qd1']
+    df['o1_value'] = df['po1'] * df['qo1']
     return df
 
 def get_price():
@@ -156,13 +159,13 @@ def combine_realtime():
     df['sell_n_value'] = df['pc'] * df['sell_n_volume']
     df['buy_per_capita'] = (df['buy_i_value'] / df['buy_i_count'] / 10000000 ).round(1)
     df['sell_per_capita'] = (df['sell_i_value'] / df['sell_i_count'] / 10000000 ).round(1)
-    df['power_of_demand'] = (df['buy_per_capita'] / df['sell_per_capita']).round(2)
+    df['power'] = (df['buy_per_capita'] / df['sell_per_capita']).round(2)
     df['volume'] = df['buy_i_volume'] + df['buy_n_volume']
     df['ind_buy_ratio'] = (100 * df['buy_i_volume'] / df['volume'] ).round(1)
     df['ind_sell_ratio'] = (100 * df['sell_i_volume'] / df['volume'] ).round(1)
     df['cor_buy_ratio'] = (100 * df['buy_n_volume'] / df['volume'] ).round(1)
     df['cor_sell_ratio'] = (100 * df['sell_n_volume'] / df['volume'] ).round(1)
-    df['indivisual_mony_flow'] = df['buy_i_value'] - df['sell_i_value']
+    df['mony_flow'] = df['buy_i_value'] - df['sell_i_value']
     df = df[df['symbol'].notnull()]
     df = df[config.REALTIME_COLUMNS]
     return df

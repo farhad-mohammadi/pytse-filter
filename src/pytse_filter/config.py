@@ -36,8 +36,9 @@ REALTIME_COLUMNS = [
     'buy_i_volume', 'buy_n_volume', 'sell_i_count', 'sell_n_count',
     'sell_i_volume', 'sell_n_volume', 'buy_i_value',
     'sell_i_value', 'buy_n_value', 'sell_n_value', 'buy_per_capita',
-    'sell_per_capita', 'power_of_demand', 'volume', 'ind_buy_ratio',
-    'ind_sell_ratio', 'cor_buy_ratio', 'cor_sell_ratio', 'indivisual_mony_flow',
+    'sell_per_capita', 'power', 'volume', 'ind_buy_ratio',
+    'ind_sell_ratio', 'cor_buy_ratio', 'cor_sell_ratio', 'mony_flow',
+    'd1_value', 'o1_value',
     'zo1', 'zd1', 'pd1', 'po1', 'qd1', 'qo1', 
     'zo2', 'zd2', 'pd2', 'po2', 'qd2', 'qo2', 'zo3', 'zd3',
     'pd3', 'po3', 'qd3', 'qo3', 'zo4', 'zd4', 'pd4', 'po4', 'qd4', 'qo4',
@@ -49,7 +50,7 @@ REALTIME_CHECK_DF = pd.DataFrame({col: [1] for col in REALTIME_COLUMNS})
 REALTIME_CONVERT_DICT = {col: f'df["{col}"]' for col in REALTIME_COLUMNS}
 
 HISTORY_COLUMNS = [
-    "open", "low", "high", "close", "adj_close",
+    "jdate", "open", "low", "high", "close", "adj_close",
     "volume", "value", "count", "yesterday_adj_close",
     "inscode", "buy_i_volume", "buy_n_volume", "buy_i_value", "buy_n_value",
     "buy_n_count", "sell_i_volume", "buy_i_count", "sell_n_volume",

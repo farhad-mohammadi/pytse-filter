@@ -7,8 +7,11 @@ from .syms_manager import symbols_dict, symbol_to_inscode
 from . import config
 from .calculate_client_data import calculate_client_data
 from .calculate_indicators import calculate_indicators
+from persiantools.jdatetime import JalaliDate
 import warnings
-warnings.filterwarnings('ignore', category=FutureWarning)
+warnings.filterwarnings('ignore' , category= FutureWarning)
+import locale
+locale.setlocale(locale.LC_ALL, 'fa_IR')
 
 def get_price_history(symbol= None, inscode=None, length= 200):
     """
@@ -27,11 +30,12 @@ def get_price_history(symbol= None, inscode=None, length= 200):
         if symbol is None: return
         inscode =         symbol_to_inscode(symbol)
         if inscode is None : return
+    if length == -1 :
+        length = 9999
     try:
         datas = requests.get(config.PRICE_HISTORY.format(inscode, length), headers= config.HEADERS, timeout= 3).text.split(';')
     except:
         return
-    if len(datas) <= length : return
     rows = []
     for data in datas[:-1]:
         if len(data.split('@')) != 10 : break
@@ -40,10 +44,20 @@ def get_price_history(symbol= None, inscode=None, length= 200):
     columns = ['date', 'high', 'low', 'adj_close', 'close', 'open', 'yesterday_adj_close', 'value', 'volume', 'count']
     df = pd.DataFrame(rows, columns= columns)
     df['date'] = pd.to_datetime(df['date'], format='%Y%m%d')
-    df = df[['date', 'open', 'low', 'high', 'close', 'adj_close', 'volume', 'value', 'count', 'yesterday_adj_close']]
+    def jdate(x):
+        """
+        Convert Gregorian date to jalali date
+        """
+
+        jalali_date = JalaliDate.to_jalali(x['date'].year, x['date'].month, x['date'].day)
+        return jalali_date.strftime('%A %Y/%m/%d')
+    
+    df['jdate'] = df.apply(func= jdate, axis= 1)
+    columns = ['date', 'jdate', 'open', 'low', 'high', 'close', 'adj_close', 'volume', 'value', 'count', 'yesterday_adj_close']
+    df = df[columns]
     df.set_index(df['date'], inplace= True)
     df.drop(columns= ['date'], inplace= True)
-    df = df.astype('Float64')
+    df[columns[2:]] = df[columns[2:]].apply (pd.to_numeric, errors='coerce')
     df = df[::-1]
     return df
 
@@ -78,8 +92,7 @@ def get_client_history(symbol= None, inscode=None, length= 200):
     df.set_index(df['date'], inplace= True)
     df.drop(columns= ['date'], inplace= True)
     df = df[::-1]
-    df= df.astype('float64')
-    # df = df.apply(pd.to_numeric, errors='coerce')
+    df = df.astype('float64')
     return df
 
 def combine_history(symbol= None, inscode=None, length= 200, calc_inds= True, calc_client= True):

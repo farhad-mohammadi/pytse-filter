@@ -154,7 +154,7 @@ class History:
             result.to_csv(self.base_path + 'summery.csv')
             return result
 
-    def download_history(self, symbol, length= 200, calc_inds= True, calc_client= True):
+    def download_history(self, symbol, length= -1, calc_inds= True, calc_client= True):
         """
         Downloads and saves historical data for a specific symbol to an Excel file.
 
