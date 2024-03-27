@@ -2,7 +2,7 @@
 .env/
 dist/
 __pycache__/
-tse_filter/__pycache__/
+pytse_filter/__pycache__/
 mydocs/
 .git/
 *.pickle
