@@ -29,9 +29,9 @@ PRICE_HISTORY = "http://old.tsetmc.com/tsev2/data/InstTradeHistory.aspx?i={}&Top
 CLIENT_HISTORY ="http://cdn.tsetmc.com/api/ClientType/GetClientTypeHistory/{}"
 
 REALTIME_COLUMNS = [
-    'code', 'symbol', 'name', 'pf', 'pmin', 'pmax', 'pl', 'pc', 'py', 'tvol', 'tval',
+    'code', 'symbol', 'name', 'pf', 'pmin', 'pmax', 'pl', 'pc', 'py', 'tno', 'tvol', 'tval',
     'eps', 'bvol', 'tmax', 'tmin', 
-    'plp', 'pcp', 'pfp', 'pminp', 'pmaxp', 'tminp', 'tmaxp', 
+    'plp', 'pcp', 'pfp', 'pminp', 'pmaxp', 'tminp', 'tmaxp',  'z',
     'buy_i_count', 'buy_n_count',
     'buy_i_volume', 'buy_n_volume', 'sell_i_count', 'sell_n_count',
     'sell_i_volume', 'sell_n_volume', 'buy_i_value',

@@ -83,12 +83,12 @@ def get_price():
     if len(data23) < 100 and len(data25) < 100: return
     if len(data23) > 100 :
         df = pd.DataFrame(data23)
-        df.columns = ['id', 'code', 'symbol', 'name', 'nc', 'pf', 'pc', 'pl', 'nc', 'tvol', 'tval',
-        'pmin', 'pmax', 'py', 'eps', 'bvol', 'nc', 'nc', 'nc', 'tmax', 'tmin', 'nc', 'nc']
+        df.columns = ['id', 'code', 'symbol', 'name', 'nc', 'pf', 'pc', 'pl', 'tno', 'tvol', 'tval',
+        'pmin', 'pmax', 'py', 'eps', 'bvol', 'nc', 'nc', 'nc', 'tmax', 'tmin', 'z', 'nc']
     else:
         df = pd.DataFrame(data25)
-        df.columns = ['id', 'code', 'symbol', 'name', 'nc', 'pf', 'pc', 'pl', 'nc', 'tvol', 'tval',
-        'pmin', 'pmax', 'py', 'eps', 'bvol', 'nc', 'nc', 'nc', 'tmax', 'tmin', 'nc', 'nc', 'nc', 'nc']
+        df.columns = ['id', 'code', 'symbol', 'name', 'nc', 'pf', 'pc', 'pl', 'tno', 'tvol', 'tval',
+        'pmin', 'pmax', 'py', 'eps', 'bvol', 'nc', 'nc', 'nc', 'tmax', 'tmin', 'z', 'nc', 'nc', 'nc']
     df = df[~df['symbol'].str.contains(r'\d')]
     df.set_index(df['id'], inplace= True)
     df.drop(columns=['id', 'nc'], inplace= True)
