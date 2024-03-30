@@ -120,7 +120,7 @@ class RealTime:
         if not self.datas is None:
             self.download_status = True
         
-    def all(self, update_data = True):
+    def get_all_stocks_data(self, update_data = True):
         """
         This method returns the data frame of all the stocks. It optionally updates the data from the web source before returning it.
         
@@ -134,6 +134,21 @@ class RealTime:
         if update_data: 
             self.download()
         return self.datas
+    
+    def get_stocks_data_as_list(self, update_data=True):
+        """
+        This function calls the 'get_all_stocks_data' method and returns its output as a list of dictionaries.
+
+        Parameters:
+            update_data (bool): Whether to update the data from the web source or not. Default is True.
+
+        Returns:
+            list_of_dicts (list): The list of dictionaries containing all the stocks data.
+        """
+
+        df = self.get_all_stocks_data(update_data=update_data)
+        list_of_dicts = df.to_dict('records')
+        return list_of_dicts
     
     def filter_by_obj_condition(self, update_data= True):
         """

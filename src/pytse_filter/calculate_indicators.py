@@ -38,4 +38,7 @@ def calculate_indicators(df):
         else:
             for i, ind_set in enumerate(ind_sets):
                 df[ind_set['columns'][0]] = eval(f"{ind_set['args']['source']}.rolling({ind_set['args']['period']}).{ind_name}()")
+                df["dis_from" + ind_set['columns'][0]] =  100 * (
+                    df['close'] - df[ind_set['columns'][0]]).abs(
+                ) / df[ind_set['columns'][0]]
     return df
