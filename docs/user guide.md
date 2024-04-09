@@ -37,14 +37,14 @@ Import the RealTime class from the library and pass the filter text as shown in 
 from pytse_filter import RealTime
 
 # Example 1: Symbols with more buyer power than seller power
-conditions = 'pl < py and power_of_demand > 1'
+conditions = 'pl < py and power > 1'
 df = RealTime().filter_by_text_condition(conditions)
 print(df)
 # Optionally save the result to an Excel file
 # df.to_excel('myfilter.xlsx')
 
 # Example 2: Symbols with high buyer-to-seller power and significant per capita purchase
-conditions = 'power_of_demand > 2 and buy_per_capita > 30'
+conditions = 'power > 2 and buy_per_capita > 30'
 df = RealTime().filter_by_text_condition(conditions)
 print(df)
 # df.to_excel('myfilter.xlsx')
@@ -64,7 +64,7 @@ import sys
 
 market = RealTime()
 sell_queue_symbols = market.filter_by_text_condition('pl == tmin')
-if not sell_queue_symbols:
+if len(not sell_queue_symbols) == 0:
     print('No sell queues detected.')
     sys.exit()
 
@@ -74,7 +74,7 @@ print(sell_queue_symbols)
 while True:
     sleep(10)  # Check every 10 seconds
     updated_sell_queue_symbols = market.filter_by_text_condition('pl == tmin')
-    if updated_sell_queue_symbols is None:
+    if len(updated_sell_queue_symbols) == 0
         continue
     updated_sell_queue_symbols = updated_sell_queue_symbols['symbol'].tolist()
     for sym in sell_queue_symbols:
@@ -89,9 +89,9 @@ import sys
 
 buy_queue_condition = RealTimeCondition('pl == tmax')
 sell_queue_condition = RealTimeCondition('pl == tmin')
-positive_conditions = RealTimeCondition('pl < tmax & plp > 1')
-negative_conditions = RealTimeCondition('pl > tmin & plp < -1')
-zero_condition = RealTimeCondition('plp <= 1 & plp >= -1')
+positive_conditions = RealTimeCondition('pl < tmax and plp > 1')
+negative_conditions = RealTimeCondition('pl > tmin and plp < -1')
+zero_condition = RealTimeCondition('plp <= 1 and plp >= -1')
 
 market_data = RealTime()
 market_data.download()
@@ -125,6 +125,29 @@ Out of {symbols_total} symbols
 
 print(msg)  # You can send the text to your social networks.
 
+Additional Methods in RealTime Class
+
+• get_all_stocks_data
+This method retrieves the current data for all symbols, performs necessary calculations, and returns the data as a pandas DataFrame.
+
+Example Usage:
+
+from pytse_filter import RealTime
+
+# Retrieve and calculate data for all stocks
+df = RealTime().get_all_stocks_data(update_data=True)
+
+The update_data parameter determines whether to download fresh data (True) or use the existing data (False).
+
+• get_stocks_data_as_list
+Similar to get_all_stocks_data, but returns the output as a list of dictionaries, each containing data for a specific symbol.
+
+Example Usage:
+from pytse_filter import RealTime
+
+# Get data for all stocks as a list of dictionaries
+list_of_dict = RealTime().get_stocks_data_as_list(update_data=True)
+
 Using the History Class
 The History class in the pytse-filter library is a powerful tool for analyzing historical stock data. It enables you to apply various technical indicators and perform calculations on individual and aggregate buying and selling records.
 
@@ -134,7 +157,7 @@ Before applying filters, you need to download and process the data for all symbo
 from pytse_filter import History
 
 # Run this after 8 pm to update the data with the latest market information
-History().download_summary()
+History().download_summery()
 
 Depending on your internet speed, this process can take between 20 minutes to over an hour. However, once the data is updated, it is saved locally, allowing you to apply numerous filters quickly.
 
@@ -144,7 +167,7 @@ For beginners, the History class provides a straightforward way to filter symbol
 from pytse_filter import History
 
 # Example: Symbols with an RSI less than 30 and a positive moving average convergence
-conditions = 'rsi14 < 30 and macd > 0'
+conditions = 'rsi < 30 and macd > 0'
 df = History().filter_by_text_condition(conditions)
 print(df)
 # Optionally save the result to an Excel file
@@ -171,19 +194,38 @@ from pytse_filter import History, RealTime
 from time import sleep
 
 # Pre-filter symbols based on historical RSI being below 40
-historical_symbols = History().filter_by_text_condition('rsi14 < 40')
+historical_symbols = History().filter_by_text_condition('rsi < 40')
 historical_symbols = list(historical_symbols.index)
 
 # Monitor these symbols in real-time for a buyer power greater than 2
 while True:
     sleep(10)  # Check every 10 seconds
-    current_power_symbols = RealTime().filter_by_text_condition('power_of_demand > 2')
+    current_power_symbols = RealTime().filter_by_text_condition('power > 2')
     current_power_symbols = current_power_symbols['symbol'].tolist()
     for symbol in current_power_symbols:
         if symbol in historical_symbols:
             print(f'Historical RSI < 40 and current buyer power > 2 for {symbol}')
 
 This approach allows traders to set up a system that alerts them when historically strong symbols show significant buying interest in the current market, providing a potential opportunity for trading.
+
+Additional Methods in History Class
+• download_history
+This method fetches the historical data for a given symbol, performs calculations and indicator analysis, and returns the result. It also saves the output as an Excel file in the history folder.
+
+Example Usage:
+from pytse_filter import History
+
+# Download and process historical data for a symbol
+df = History().download_history(symbol= 'خودرو', length=-1, calc_inds=True, calc_client=True)
+
+Parameters:
+•  symbol: The ticker symbol of the stock.
+
+•  length: The number of data points to retrieve. -1 indicates the entire history.
+
+•  calc_inds: Whether to calculate indicators (True or False).
+
+•  calc_client: Whether to perform individual and non-individual calculations (True or False).
 
 Writing Conditions
 A condition is a text string that defines the criteria for filtering stock data. Use the following syntax rules:
