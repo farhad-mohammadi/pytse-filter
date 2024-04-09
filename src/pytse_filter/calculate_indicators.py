@@ -31,9 +31,13 @@ def calculate_indicators(df):
                 elif ind_name == "ichimoku":
                     ichi = temp_df[0]
                     future_ichi = temp_df[1]
-                    ichi.columns = ind_set['columns'][0]
-                    future_ichi.columns = ind_set['columns'][1]                
-                    future_ichi.set_index(ichi.index[-inds_setting.indicators[ind_name][i]['args']['kijun']:], inplace= True)
+                    if ichi is not None:
+                        ichi.columns = ind_set['columns'][0]
+                        future_ichi.columns = ind_set['columns'][1]                
+                        future_ichi.set_index(ichi.index[-inds_setting.indicators[ind_name][i]['args']['kijun']:], inplace= True)
+                    else:
+                        ichi = pd.DataFrame(columns= ind_set['columns'][0])
+                        future_ichi = pd.DataFrame(columns= ind_set['columns'][1]                )
                     df =pd.concat([df, ichi, future_ichi], axis= 1)
         else:
             for i, ind_set in enumerate(ind_sets):
