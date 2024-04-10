@@ -1,7 +1,7 @@
 from pytse_filter import RealTime
 from time import sleep
 
-thereshold_in_money = 3
+thereshold_in_money = 1_000_000_000 # یک میلیارد ریال
 past_data = None
 while past_data is None:
     past_data = RealTime().get_all_stocks_data()
