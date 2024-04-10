@@ -7,11 +7,9 @@ from .syms_manager import symbols_dict, symbol_to_inscode
 from . import config
 from .calculate_client_data import calculate_client_data
 from .calculate_indicators import calculate_indicators
-from persiantools.jdatetime import JalaliDate
+import jdatetime
 import warnings
 warnings.filterwarnings('ignore' , category= FutureWarning)
-import locale
-locale.setlocale(locale.LC_ALL, 'fa_IR')
 
 def get_price_history(symbol= None, inscode=None, length= 200):
     """
@@ -49,9 +47,9 @@ def get_price_history(symbol= None, inscode=None, length= 200):
         Convert Gregorian date to jalali date
         """
 
-        jalali_date = JalaliDate.to_jalali(x['date'].year, x['date'].month, x['date'].day)
-        return jalali_date.strftime('%A %Y/%m/%d')
-    
+        jalali_date = jdatetime.date.fromgregorian(date= x['date'])
+        return jalali_date.strftime('%Y-%m-%d')
+
     df['jdate'] = df.apply(func= jdate, axis= 1)
     columns = ['date', 'jdate', 'open', 'low', 'high', 'close', 'adj_close', 'volume', 'value', 'count', 'yesterday_adj_close']
     df = df[columns]
