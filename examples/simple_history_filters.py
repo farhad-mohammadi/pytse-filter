@@ -3,7 +3,7 @@ from pytse_filter import History
 # History().download_summery() # فقط نیاز است برای بروز رسانی داده ها اجرا شود
 
 # نمادهایی که RSI آنها کمتر از 50 باشد و  میانگین قدرت خریدار به فروشنده ی 10 روزه یآنها بیشتر از یک باشد
-conditions = 'rsi14 < 50 and power_of_demand_avg10 > 1'
+conditions = 'rsi < 50 and power_avg10 > 1'
 df = History().filter_by_text_condition(conditions)
 print(df)
 # df.to_excel('my_filter.xlsx')
