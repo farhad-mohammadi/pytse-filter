@@ -121,12 +121,13 @@ class History:
             mkdir(self.base_path)
         self.num_of_all_symbols = None
         self.num_of_success = None
-    def download_summery(self, symbols= "all"):
+    def download_summery(self, symbols= "all", adjusted_price= True):
         """
         Downloads and summarizes historical data for a list of symbols or all symbols if not specified.
 
         Parameters:
             symbols (list/str): A list of symbols to summarize or "all" to summarize all symbols.
+            adjusted_price (bool): download adjusted price or not
 
         Returns:
             pd.DataFrame: A DataFrame containing the summarized historical data.
@@ -137,7 +138,7 @@ class History:
         dfs = []
         length = inds_setting.find_count(inds_setting.indicators)
         for symbol in tqdm(symbols):
-            df = combine_history(symbol, length= length)
+            df = combine_history(symbol, adjusted_price= adjusted_price, length= length)
             if not df is None:
                 df0 = df.loc[[df.index[-1]]]
                 df1 =  df.loc[[df.index[-2]]]
@@ -154,26 +155,29 @@ class History:
             result.to_csv(self.base_path + 'summery.csv')
             return result
 
-    def download_history(self, symbol, length= -1, calc_inds= True, calc_client= True):
+    def download_history(self, symbol, adjusted_price= True, length= -1, calc_inds= True, calc_client= True, save_excel_file= True):
         """
         Downloads and saves historical data for a specific symbol to an Excel file.
 
         Parameters:
             symbol (str): The stock symbol to download historical data for.
+            adjusted_price (bool): download adjusted price or not
             length (int): The number of days of historical data to download.
             calc_inds (bool): Whether to calculate indicators for the data.
             calc_client (bool): Whether to calculate client data for the data.
+            save_excel_file (bool): save result to an excel file or not
 
         Returns:
             pd.DataFrame: A DataFrame containing the historical data.
         """
 
-        df = combine_history(symbol= symbol, length= length, calc_inds= calc_inds, calc_client= calc_client)
+        df = combine_history(symbol= symbol, adjusted_price= adjusted_price, length= length, calc_inds= calc_inds, calc_client= calc_client)
         if df is None:
             return
         df.drop(columns= ['inscode'], inplace= True)
         df = df[::-1]
-        df.to_excel(f"{self.base_path}{symbol}.xlsx")
+        if save_excel_file:
+            df.to_excel(f"{self.base_path}{symbol}.xlsx")
         return df
     
     def filter_by_obj_condition(self):

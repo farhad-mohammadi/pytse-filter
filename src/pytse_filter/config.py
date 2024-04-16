@@ -26,6 +26,7 @@ HEADERS  = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) Apple
 PRICE_URL = "http://old.tsetmc.com/tsev2/data/MarketWatchPlus.aspx"
 CLIENT_URL = "http://old.tsetmc.com/tsev2/data/clienttypeall.aspx"
 PRICE_HISTORY = "http://old.tsetmc.com/tsev2/data/InstTradeHistory.aspx?i={}&Top={}&A=0"
+ADJUSTED_PRICE_HISTORY = "https://members.tsetmc.com/tsev2/chart/data/Financial.aspx?i={}&t=ph&a=1"
 CLIENT_HISTORY ="http://cdn.tsetmc.com/api/ClientType/GetClientTypeHistory/{}"
 
 REALTIME_COLUMNS = [

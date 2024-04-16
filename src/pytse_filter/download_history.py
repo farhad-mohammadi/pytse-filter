@@ -11,6 +11,52 @@ import jdatetime
 import warnings
 warnings.filterwarnings('ignore' , category= FutureWarning)
 
+def get_adjusted_price_history(symbol= None, inscode=None, length= 200):
+    """
+    Retrieves adjusted price history for a given stock symbol or inscode.
+
+    Parameters:
+        symbol (str): The stock symbol.
+        inscode (str): The stock inscode.
+        length (int): Number of records to retrieve.
+
+    Returns:
+        DataFrame: A DataFrame containing the price history.
+    """
+
+    if inscode is None :
+        if symbol is None: return
+        inscode =         symbol_to_inscode(symbol)
+        if inscode is None : return
+    try:
+        datas = requests.get(config.ADJUSTED_PRICE_HISTORY.format(inscode), headers= config.HEADERS, timeout= 3).text.split(';')
+    except Exception as e:
+        return e
+    rows = []
+    for data in datas:
+        rows.append(data.split(','))
+    if len(rows) == 0 : return
+    columns = ['date',  'high', 'low', 'open', 'close', 'volume', 'adj_close']
+    df = pd.DataFrame(rows, columns= columns)
+    df['date'] = pd.to_datetime(df['date'], format='%Y%m%d')
+    def jdate(x):
+        """
+        Convert Gregorian date to jalali date
+        """
+
+        jalali_date = jdatetime.date.fromgregorian(date= x['date'])
+        return jalali_date.strftime('%Y-%m-%d')
+
+    df['jdate'] = df.apply(func= jdate, axis= 1)
+    columns = ['date', 'jdate', 'open', 'low', 'high', 'close', 'adj_close', 'volume']
+    df = df[columns]
+    df.set_index(df['date'], inplace= True)
+    df.drop(columns= ['date'], inplace= True)
+    df[columns[2:]] = df[columns[2:]].apply (pd.to_numeric, errors='coerce')
+    if length == -1 : length = 0
+    df = df[-length:]
+    return df
+
 def get_price_history(symbol= None, inscode=None, length= 200):
     """
     Retrieves price history for a given stock symbol or inscode.
@@ -93,13 +139,14 @@ def get_client_history(symbol= None, inscode=None, length= 200):
     df = df.astype('float64')
     return df
 
-def combine_history(symbol= None, inscode=None, length= 200, calc_inds= True, calc_client= True):
+def combine_history(symbol= None, inscode=None, adjusted_price= True, length= 200, calc_inds= True, calc_client= True):
     """
     Combines price and client history into a single DataFrame.
 
     Parameters:
         symbol (str): The stock symbol.
         inscode (str): The stock inscode.
+        adjusted_price (bool): select adjusted price or not
         length (int): Number of records to retrieve.
         calc_inds (bool): Whether to calculate indicators.
         calc_client (bool): Whether to calculate client data.
@@ -108,7 +155,10 @@ def combine_history(symbol= None, inscode=None, length= 200, calc_inds= True, ca
         DataFrame: A DataFrame containing the combined history.
     """
 
-    price_df = get_price_history(symbol= symbol, inscode=inscode, length= length)
+    if adjusted_price:
+        price_df = get_adjusted_price_history(symbol= symbol, inscode=inscode, length= length)
+    else:
+        price_df = get_price_history(symbol= symbol, inscode=inscode, length= length)
     if price_df is None :
         return
     client_df = get_client_history(symbol= symbol, inscode=inscode, length= length)
