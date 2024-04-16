@@ -47,6 +47,8 @@ def get_supply_demand_data(datas):
     df = df.apply (pd.to_numeric, errors='coerce')
     df['d1_value'] = df['pd1'] * df['qd1']
     df['o1_value'] = df['po1'] * df['qo1']
+    df['d1_per_capita'] = (df['d1_value'] / df['zd1']) / 10000000
+    df['o1_per_capita'] = (df['o1_value'] / df['zo1']) / 10000000
     return df
 
 def get_price():
