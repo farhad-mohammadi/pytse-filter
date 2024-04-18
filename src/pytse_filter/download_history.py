@@ -30,8 +30,8 @@ def get_adjusted_price_history(symbol= None, inscode=None, length= 200):
         if inscode is None : return
     try:
         datas = requests.get(config.ADJUSTED_PRICE_HISTORY.format(inscode), headers= config.HEADERS, timeout= 3).text.split(';')
-    except Exception as e:
-        return e
+    except:
+        return
     rows = []
     for data in datas:
         rows.append(data.split(','))
