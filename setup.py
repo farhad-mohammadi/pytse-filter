@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 from os import path
 
-__version__ = 1.32
+__version__ = 1.33
 
 with open( ".\\readme.md", "r") as f:
     long_description = f.read()
