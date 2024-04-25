@@ -1,6 +1,9 @@
 # This module is responsible for managing the symbols and their corresponding codes (inscodes)
 # for the Tehran stock market. It provides functionality to convert between a symbol and its inscode.
 import json
+from . import config
+import requests
+import pandas as pd
 from os import path
 
 def symbols_dict():
@@ -46,3 +49,12 @@ def inscode_to_symbol(inscode):
     symbols = {value: key for key, value in symbols.items()}
     return symbols[id] if id in symbols.keys() else None
 
+def refresh_symbols():
+    url = "http://old.tsetmc.com/Loader.aspx?ParTree=151114"
+    try:
+        datas = requests.get(url= url, headers= config.HEADERS).text
+        df = pd.read_html(datas, header=0)  [0]
+    except:
+        return
+    df.to_excel('t.xlsx')
+    print(df)
