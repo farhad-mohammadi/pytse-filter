@@ -17,3 +17,4 @@ tzdata==2024.1
 urllib3==2.2.1
 jalali_core==1.0.0
 jdatetime==5.0.0
+lxml==5.2.1                                                                                                                                                             
