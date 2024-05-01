@@ -114,7 +114,7 @@ def symbols_category():
         funds, fixed_interest_funds, other_funds
     )
 
-def refresh_syms_file():
+def update_syms_file():
     """
     Creating a dictionary of symbols and their inscode and writing them in a json file
 
