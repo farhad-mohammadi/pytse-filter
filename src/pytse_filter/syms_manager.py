@@ -9,11 +9,11 @@ from os import path
 
 def symbols_dict():
     """
-Reads the 'syms.json' file and returns a dictionary of stock symbols and their inscodes.
+    Reads the 'syms.json' file and returns a dictionary of stock symbols and their inscodes.
 
-Returns:
-dict: A dictionary with symbols as keys and inscodes as values.
-"""
+    Returns:
+        dict: A dictionary with symbols as keys and inscodes as values.
+    """
 
     file_path = path.join(path.dirname(__file__), 'syms.json')
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -113,3 +113,23 @@ def symbols_category():
         main_market, otc_market, base_market,
         funds, fixed_interest_funds, other_funds
     )
+
+def refresh_syms_file():
+    """
+    Creating a dictionary of symbols and their inscode and writing them in a json file
+
+    Returns:
+        bool: True if done and false if an error occurs
+    """
+
+    datas = symbols_category()
+    if not datas: 
+        return False
+    file_path = path.join(path.dirname(__file__), 'syms.json')
+    main, otc, _, funds, _, _ = datas
+    df = pd.concat([main, otc, funds])
+    df.set_index(df['symbol'], inplace= True)
+    symbols_dict = df['id'].to_dict()
+    with open(file_path, 'w', encoding= 'utf-8') as f:
+        json.dump(symbols_dict, f, ensure_ascii=False, indent=4)
+    return True
