@@ -33,6 +33,7 @@ def symbol_to_inscode(symbol):
 """
 
     symbols = symbols_dict()
+    symbol = symbol.replace(chr(1610), 'ی').replace(chr(1603), 'ک')
     return symbols[symbol] if symbol in symbols.keys() else None
 
 def inscode_to_symbol(inscode):
@@ -108,7 +109,6 @@ def symbols_category():
     funds = real_df[real_df['group'] == "صندوق سرمايه گذاري قابل معامله"]
     fixed_interest_funds = funds[funds['name'].str.contains('ثا', na= False)]
     other_funds = funds[~funds['name'].str.contains('ثا', na= False)]
-    other_funds.to_excel('other_funds.xlsx')
     return (
         main_market, otc_market, base_market,
         funds, fixed_interest_funds, other_funds
