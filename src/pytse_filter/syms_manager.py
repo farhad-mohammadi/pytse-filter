@@ -126,7 +126,7 @@ def update_syms_file():
     if not datas: 
         return False
     file_path = path.join(path.dirname(__file__), 'syms.json')
-    main, otc, _, funds, _, _ = datas
+    main, otc, _, _, _, funds = datas
     df = pd.concat([main, otc, funds])
     df.set_index(df['symbol'], inplace= True)
     symbols_dict = df['id'].to_dict()
