@@ -28,6 +28,7 @@ CLIENT_URL = "http://old.tsetmc.com/tsev2/data/clienttypeall.aspx"
 PRICE_HISTORY = "http://old.tsetmc.com/tsev2/data/InstTradeHistory.aspx?i={}&Top={}&A=0"
 ADJUSTED_PRICE_HISTORY = "https://members.tsetmc.com/tsev2/chart/data/Financial.aspx?i={}&t=ph&a=1"
 CLIENT_HISTORY ="http://cdn.tsetmc.com/api/ClientType/GetClientTypeHistory/{}"
+SYMBOLS = "http://old.tsetmc.com/Loader.aspx?ParTree=151114"
 
 REALTIME_COLUMNS = [
     'code', 'symbol', 'name', 'pf', 'pmin', 'pmax', 'pl', 'pc', 'py', 'tno', 'tvol', 'tval',
