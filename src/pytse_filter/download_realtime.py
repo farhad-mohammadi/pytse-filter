@@ -167,7 +167,7 @@ def combine_realtime():
     df['ind_sell_ratio'] = (100 * df['sell_i_volume'] / df['volume'] ).round(1)
     df['cor_buy_ratio'] = (100 * df['buy_n_volume'] / df['volume'] ).round(1)
     df['cor_sell_ratio'] = (100 * df['sell_n_volume'] / df['volume'] ).round(1)
-    df['mony_flow'] = df['buy_i_value'] - df['sell_i_value']
+    df['money_flow'] = df['buy_i_value'] - df['sell_i_value']
     df = df[df['symbol'].notnull()]
     df = df[config.REALTIME_COLUMNS]
     return df

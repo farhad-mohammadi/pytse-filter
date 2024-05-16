@@ -36,10 +36,10 @@ calculations = {
             }
         }
     ],
-    "mony_flow": [
+    "money_flow": [
         {
             "columns": [
-                "mony_flow_total10"
+                "money_flow_total10"
             ],
             "args": {
                 "method": "sum",

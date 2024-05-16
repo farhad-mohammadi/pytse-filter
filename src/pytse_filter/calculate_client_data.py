@@ -20,7 +20,7 @@ def calculate_client_data(df):
     df['buy_per_capita'] = (df['buy_i_value'] / df['buy_i_count']) / 10000000
     df['sell_per_capita'] = (df['sell_i_value'] / df['sell_i_count']) / 10000000    
     df['power'] = df['buy_per_capita'] / df['sell_per_capita']
-    df['mony_flow'] = (df['buy_i_value'] - df['sell_i_value']) / 10000000
+    df['money_flow'] = (df['buy_i_value'] - df['sell_i_value']) / 10000000
     for calc_name, calc_sets in client_setting.calculations.items():
         for calc_set in calc_sets:
             df[calc_set['columns'][0]] = eval(f"df['{calc_name}'].rolling({calc_set['args']['period']}).{calc_set['args']['method']}()")

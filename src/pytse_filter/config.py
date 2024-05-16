@@ -39,7 +39,7 @@ REALTIME_COLUMNS = [
     'sell_i_volume', 'sell_n_volume', 'buy_i_value',
     'sell_i_value', 'buy_n_value', 'sell_n_value', 'buy_per_capita',
     'sell_per_capita', 'power', 'volume', 'ind_buy_ratio',
-    'ind_sell_ratio', 'cor_buy_ratio', 'cor_sell_ratio', 'mony_flow',
+    'ind_sell_ratio', 'cor_buy_ratio', 'cor_sell_ratio', 'money_flow',
     'd1_value', 'o1_value', 'd1_per_capita', 'o1_per_capita',
     'zo1', 'zd1', 'pd1', 'po1', 'qd1', 'qo1', 
     'zo2', 'zd2', 'pd2', 'po2', 'qd2', 'qo2', 'zo3', 'zd3',
